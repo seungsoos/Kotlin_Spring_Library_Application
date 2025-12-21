@@ -1,6 +1,5 @@
 package com.group.libraryapp.calculator
 
-import org.junit.jupiter.api.Assertions.*
 
 fun main() {
     val calculatorTest = CalculatorTest()
@@ -8,6 +7,8 @@ fun main() {
     calculatorTest.addTest()
     calculatorTest.minusTest()
     calculatorTest.multiplyTest()
+    calculatorTest.divideTest()
+    calculatorTest.divideExceptionTest()
 }
 
 class CalculatorTest {
@@ -56,4 +57,30 @@ class CalculatorTest {
             throw IllegalArgumentException()
         }
     }
+
+    fun divideTest() {
+        val calculator = Calculator(5)
+        calculator.divide(2)
+        if (calculator.number != 2) {
+            throw IllegalArgumentException()
+        }
+    }
+
+    fun divideExceptionTest() {
+        val calculator = Calculator(5)
+        try {
+            calculator.divide(0)
+        } catch (e: IllegalArgumentException) {
+            if (e.message != "0으로 나눌 수 없습니다.") {
+                throw IllegalStateException("예외 메세지가 다릅니다.")
+            }
+            // 테스트 성공
+            return
+        } catch (e: Exception) {
+            throw IllegalStateException()
+        }
+        throw IllegalStateException("기대하는 예외가 발생하지 않음.")
+    }
+
+
 }
